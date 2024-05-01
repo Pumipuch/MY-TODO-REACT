@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 // เก็บ URL_Base เป็น const
 const BASE_URL = 'https://6630e534c92f351c03db7ae3.mockapi.io'
@@ -13,6 +14,9 @@ function Edit() {
     const { id } = useParams()
 
     const [isLoading, setIsLoading] = useState(true)
+
+    //react hook ต้องประกาศ const ภายใน func หลักเท่านั้น
+    const navigate = useNavigate()
 
     // สร้าง useState สำหรับเก็บข้อมูล หลังจาก get มา
     const [todo, setTodo] = useState({
@@ -55,11 +59,12 @@ function Edit() {
             // put data where id และใส่ name ค่าใหม่
             await axios.put(`${BASE_URL}/todos/${id}`, { name: todo.name })
             
-            // setIsLoading(true)
-            // setTimeout(() => {
-            //     setIsLoading(false)
-            // }, 2000)
-            
+            setIsLoading(true)
+            setTimeout(() => {
+                setIsLoading(false)
+            }, 2000)
+            // กลับไปที่หน้าหลัก
+            navigate('/')            
         } catch (error) {
             console.log('error', error)
         }
@@ -80,7 +85,7 @@ function Edit() {
                 </div>
             }
             {/* ปุ่ม onClick updateName */}
-            <button onClick={updateName}> Edit </button>
+            <button onClick={updateName}> Ok </button>
 
             {/* ปุ่มกลับหน้าแรก */}
             <Link to={`/`} ><button> Back </button></Link>
