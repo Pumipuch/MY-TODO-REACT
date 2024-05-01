@@ -72,7 +72,7 @@ function Edit() {
 
     return (
         <>
-            {isLoading && <div>Loadind...</div>}
+            {isLoading && <div>Loading...</div>}
             {!isLoading &&
                 <div>
 

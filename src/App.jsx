@@ -52,7 +52,7 @@ function App() {
   return (
     <>
       {/* set แสดง Loading */}
-      {isLoading && <div>Loadind...</div>}
+      {isLoading && <div>Loading...</div>}
       {/* set ไม่แสดง Loading เมื่อเรียกข้อมูลมาแล้ว */}
       {!isLoading &&
         <div>
