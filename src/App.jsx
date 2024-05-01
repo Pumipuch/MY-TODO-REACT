@@ -56,6 +56,9 @@ function App() {
       {/* set ไม่แสดง Loading เมื่อเรียกข้อมูลมาแล้ว */}
       {!isLoading &&
         <div>
+
+          <input type="text" />
+          <button>เพิ่ม</button>
           {
             // map ข้อมูล ของ todos มาแสดง
             todos.map((todo, index) => (
