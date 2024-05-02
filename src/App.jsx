@@ -8,7 +8,8 @@ import { Link } from 'react-router-dom'
 const BASE_URL = 'https://6630e534c92f351c03db7ae3.mockapi.io'
 
 function App() {
-  let i = 1
+  let no = 1  
+
   // สร้าง useState สำหรับเก็บข้อมูล หลังจาก get มา
   const [todos, setTodos] = useState([])
 
@@ -64,7 +65,7 @@ function App() {
             // map ข้อมูล ของ todos มาแสดง
             todos.map((todo, index) => (
               <div key={index}>
-                {i++}
+                {no++}. {" "}
                 {/* {todo.id}  */}
                 {todo.name}
 
