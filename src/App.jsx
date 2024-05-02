@@ -11,6 +11,8 @@ function App() {
   // สร้าง useState สำหรับเก็บข้อมูล หลังจาก get มา
   const [todos, setTodos] = useState([])
 
+  let i =1
+
   // สร้าง const สำหรับ Loading เอาไว้เรียกใช้
   const [isLoading, setIsLoading] = useState(true)
 
@@ -60,7 +62,9 @@ function App() {
             // map ข้อมูล ของ todos มาแสดง
             todos.map((todo, index) => (
               <div key={index}>
-                {todo.id} {todo.name} {todo.satatus}
+                {i++}. {" "}
+                {/* {todo.id}  */}
+                {todo.name}
 
                 {/* ---- btn EDIT ---- */}
                 {/* สร้าง Link ให้ btn เพื่อไปหน้า edit พร้อมกับส่ง id ของ todo ไป */}
