@@ -8,10 +8,12 @@ import { Link } from 'react-router-dom'
 const BASE_URL = 'https://6630e534c92f351c03db7ae3.mockapi.io'
 
 function App() {
-  let no = 1  
-
   // สร้าง useState สำหรับเก็บข้อมูล หลังจาก get มา
   const [todos, setTodos] = useState([])
+
+  let i = 1
+
+  let todoText
 
   // สร้าง const สำหรับ Loading เอาไว้เรียกใช้
   const [isLoading, setIsLoading] = useState(true)
@@ -46,10 +48,31 @@ function App() {
     }
   }
 
+  async function addTodo(todoText) {
+    const bodyData = {
+      name: todoText
+    }
+    try {
+      await axios.post(`${BASE_URL}/todos/`, bodyData)
+
+      setIsLoading(true)
+      await fetchTodo()
+      console.log(bodyData)
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
   // useEffect func fetchTodo() แค่ครั้งเดียวโดยใส่ ,[] ต่อท้าย
   useEffect(() => {
     fetchTodo()
   }, [])
+
+  function todoTextChange(event) {
+    // setTodo และรับ params ชื่อ previousState เพื่อเช็คว่า ก่อนหน้านี้มีค่าเป็นอะไร
+    todoText = event.target.value
+  }
+
 
   return (
     <>
@@ -58,22 +81,25 @@ function App() {
       {/* set ไม่แสดง Loading เมื่อเรียกข้อมูลมาแล้ว */}
       {!isLoading &&
         <div>
-
-          <input type="text" />
-          <button>เพิ่ม</button>
+          <div>Add Employees</div>
+          <input name='addname' type='text' value={todoText} onChange={todoTextChange} ></input>
+          <button onClick={async () => {
+            await addTodo(todoText)
+          }}>Add</button>
           {
             // map ข้อมูล ของ todos มาแสดง
             todos.map((todo, index) => (
               <div key={index}>
-                {no++}. {" "}
+                {i++}. {" "}
                 {/* {todo.id}  */}
                 {todo.name}
+                <img src={todo.avatar} alt="avatar"></img>
 
                 {/* ---- btn EDIT ---- */}
                 {/* สร้าง Link ให้ btn เพื่อไปหน้า edit พร้อมกับส่ง id ของ todo ไป */}
                 {/* **ท่า ` ` ใช้ $ เพื่อต่อ string กับ js** */}
-                <Link to = {`/edit/${todo.id}`} >
-                <button>Edit</button>
+                <Link to={`/edit/${todo.id}`} >
+                  <button>Edit</button>
                 </Link>
 
                 {/* ---- btn DELETE ---- */}
