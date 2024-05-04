@@ -22,7 +22,8 @@ function Edit() {
     const [todo, setTodo] = useState({
 
         // obj ที่เรา get มามี3ตัว แต่เราต้องการ edit แค่ตัว name เลยต้อง set state default ให้ตัว name เป็นค่าว่างก่อน เพื่อไม่ให้ input เกิดการ undefined
-        name: ''
+        name: '',
+        avatar: ''
     })
 
     // สร้าง func fetchTodo เพื่อ get ข้อมูล (เฉพาะ id) ไป set ใน const todos
@@ -31,7 +32,7 @@ function Edit() {
             //get data where id && set Todo
             const res = await axios.get(`${BASE_URL}/todos/${editId}`)
             setTodo(res.data)
-            
+
             setIsLoading(false)
         } catch (error) {
             console.log('error', error)
@@ -53,18 +54,28 @@ function Edit() {
         }))
     }
 
+    function handleAvatarChange(event) {
+        // setTodo และรับ params ชื่อ previousState เพื่อเช็คว่า ก่อนหน้านี้มีค่าเป็นอะไร
+        setTodo((previousState) => ({
+            // ... เพื่อทำการกระจายทุกค่าออกมา
+            ...previousState,
+            // เปลี่ยนค่าใหม่ให้กับ name จาก event.target.value
+            avatar: event.target.value
+        }))
+    }
+
     //สร้าง func updateName
     async function updateName() {
         try {
             // put data where id และใส่ name ค่าใหม่
             await axios.put(`${BASE_URL}/todos/${id}`, { name: todo.name })
-            
+            await axios.put(`${BASE_URL}/todos/${id}`, { avatar: todo.avatar })
             setIsLoading(true)
             setTimeout(() => {
                 setIsLoading(false)
             }, 2000)
             // กลับไปที่หน้าหลัก
-            navigate('/')            
+            navigate('/')
         } catch (error) {
             console.log('error', error)
         }
@@ -75,9 +86,12 @@ function Edit() {
             {isLoading && <div>Loading...</div>}
             {!isLoading &&
                 <div>
+                    <div>Edit Employees</div>
 
                     {/* input ดึงค่ามาแสดง และกำหนด func onChange */}
-                    <input type='text' value={todo.name} onChange={handleNameChange}></input>
+                    <input name="editName" type='text' value={todo.name} onChange={handleNameChange}></input>
+
+                    <input name="editAvatar" type='text' value={todo.avatar} onChange={handleAvatarChange}></input>
 
                     {/* เช็คว่าค่าเปลี่ยนจริงไหม */}
                     {/* <div>{todo.name}</div> */}

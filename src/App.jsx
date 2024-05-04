@@ -11,7 +11,9 @@ function App() {
   // สร้าง useState สำหรับเก็บข้อมูล หลังจาก get มา
   const [todos, setTodos] = useState([])
 
-  let i =1
+  let i = 1
+
+  let todoText
 
   // สร้าง const สำหรับ Loading เอาไว้เรียกใช้
   const [isLoading, setIsLoading] = useState(true)
@@ -46,10 +48,31 @@ function App() {
     }
   }
 
+  async function addTodo(todoText) {
+    const bodyData = {
+      name: todoText
+    }
+    try {
+      await axios.post(`${BASE_URL}/todos/`, bodyData)
+
+      setIsLoading(true)
+      await fetchTodo()
+      console.log(bodyData)
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
   // useEffect func fetchTodo() แค่ครั้งเดียวโดยใส่ ,[] ต่อท้าย
   useEffect(() => {
     fetchTodo()
   }, [])
+
+  function todoTextChange(event) {
+    // setTodo และรับ params ชื่อ previousState เพื่อเช็คว่า ก่อนหน้านี้มีค่าเป็นอะไร
+    todoText = event.target.value
+  }
+
 
   return (
     <>
@@ -58,6 +81,11 @@ function App() {
       {/* set ไม่แสดง Loading เมื่อเรียกข้อมูลมาแล้ว */}
       {!isLoading &&
         <div>
+          <div>Add Employees</div>
+          <input name='addname' type='text' value={todoText} onChange={todoTextChange} ></input>
+          <button onClick={async () => {
+            await addTodo(todoText)
+          }}>Add</button>
           {
             // map ข้อมูล ของ todos มาแสดง
             todos.map((todo, index) => (
@@ -65,12 +93,13 @@ function App() {
                 {i++}. {" "}
                 {/* {todo.id}  */}
                 {todo.name}
+                <img src={todo.avatar} alt="avatar"></img>
 
                 {/* ---- btn EDIT ---- */}
                 {/* สร้าง Link ให้ btn เพื่อไปหน้า edit พร้อมกับส่ง id ของ todo ไป */}
                 {/* **ท่า ` ` ใช้ $ เพื่อต่อ string กับ js** */}
-                <Link to = {`/edit/${todo.id}`} >
-                <button>Edit</button>
+                <Link to={`/edit/${todo.id}`} >
+                  <button>Edit</button>
                 </Link>
 
                 {/* ---- btn DELETE ---- */}
