@@ -1,3 +1,6 @@
+import './index.css'
+import './App.css'
+
 // Router DOM จัดการผ่านหน้า Main
 import React from 'react'
 import ReactDOM from 'react-dom/client'
