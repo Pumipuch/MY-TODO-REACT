@@ -85,24 +85,41 @@ function Edit() {
         <>
             {isLoading && <div>Loading...</div>}
             {!isLoading &&
-                <div>
-                    <div>Edit Employees</div>
 
-                    {/* input ดึงค่ามาแสดง และกำหนด func onChange */}
-                    <input name="editName" type='text' value={todo.name} onChange={handleNameChange}></input>
+                <div className='max-w-3xl mx-auto my-2'>
 
-                    <input name="editAvatar" type='text' value={todo.avatar} onChange={handleAvatarChange}></input>
+                    <div><p className="text-3xl font-bold text-yellow-500 text-center m-4">Edit Employees</p></div>
 
-                    {/* เช็คว่าค่าเปลี่ยนจริงไหม */}
-                    {/* <div>{todo.name}</div> */}
+                    <div className='max-w-xl mx-auto my-2'>
+
+                        <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
+
+                            {/* input ดึงค่ามาแสดง และกำหนด func onChange */}
+                            <div>
+                                Name : {""}
+                                <input name="editName" type='text' value={todo.name} onChange={handleNameChange} className="input input-bordered flex items-center w-full"></input>
+                            </div>
+
+                            <div>
+                                Pic : {""}
+                                <input name="editAvatar" type='text' value={todo.avatar} onChange={handleAvatarChange} className="input input-bordered flex items-center w-full"></input>
+                            </div>
+                            {/* เช็คว่าค่าเปลี่ยนจริงไหม */}
+                            {/* <div>{todo.name}</div> */}
+
+                            {/* ปุ่ม onClick updateName */}
+                            <button onClick={updateName} className='grid justify-items-center md:justify-items-end btn btn-success'> Ok </button>
+
+                            {/* ปุ่มกลับหน้าแรก */}
+                            <button className='grid justify-items-center md:justify-items-start btn btn-error'><Link to={`/`} > Back </Link></button>
+
+                        </div>
+
+                    </div>
 
                 </div>
             }
-            {/* ปุ่ม onClick updateName */}
-            <button onClick={updateName}> Ok </button>
 
-            {/* ปุ่มกลับหน้าแรก */}
-            <Link to={`/`} ><button> Back </button></Link>
         </>
     )
 }
