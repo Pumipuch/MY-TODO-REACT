@@ -83,12 +83,12 @@ function Edit() {
 
     return (
         <>
-            {isLoading && <div>Loading...</div>}
+            {isLoading && <div className='flex items-center fixed inset-0 justify-center'><span className="loading loading-spinner loading-lg"></span>Loading...</div>}
             {!isLoading &&
 
-                <div className='max-w-3xl mx-auto my-2'>
+                <div className='max-w-3xl mx-auto bg-rose-100'>
 
-                    <div><p className="text-3xl font-bold text-yellow-500 text-center m-4">Edit Employees</p></div>
+                    <p className="text-3xl font-bold text-yellow-500 text-center m-4">Edit Employees</p>
 
                     <div className='max-w-xl mx-auto my-2'>
 
@@ -97,21 +97,22 @@ function Edit() {
                             {/* input ดึงค่ามาแสดง และกำหนด func onChange */}
                             <div>
                                 Name : {""}
-                                <input name="editName" type='text' value={todo.name} onChange={handleNameChange} className="input input-bordered flex items-center w-full"></input>
+                                <input name="editName" type='text' value={todo.name} onChange={handleNameChange} className="input input-bordered flex items-center w-10/12 ml-4"></input>
                             </div>
 
                             <div>
                                 Pic : {""}
-                                <input name="editAvatar" type='text' value={todo.avatar} onChange={handleAvatarChange} className="input input-bordered flex items-center w-full"></input>
+                                <input name="editAvatar" type='text' value={todo.avatar} onChange={handleAvatarChange} className="input input-bordered flex items-center w-10/12 ml-4"></input>
                             </div>
                             {/* เช็คว่าค่าเปลี่ยนจริงไหม */}
                             {/* <div>{todo.name}</div> */}
 
                             {/* ปุ่ม onClick updateName */}
+                            
                             <button onClick={updateName} className='grid justify-items-center md:justify-items-end btn btn-success'> Ok </button>
 
                             {/* ปุ่มกลับหน้าแรก */}
-                            <button className='grid justify-items-center md:justify-items-start btn btn-error'><Link to={`/`} > Back </Link></button>
+                            <button className='grid justify-items-center md:justify-items-start btn btn-error'><Link to={`/`} > Back </Link></button><br />
 
                         </div>
 

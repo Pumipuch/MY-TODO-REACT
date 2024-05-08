@@ -221,28 +221,30 @@ function App() {
 
   return (
     <>
+    
       {/* set แสดง Loading */}
-      {isLoading && <div>Loading...</div>}
+      {isLoading && <div className='flex items-center fixed inset-0 justify-center'><span className="loading loading-spinner loading-lg"></span>Loading...</div>}
       {/* set ไม่แสดง Loading เมื่อเรียกข้อมูลมาแล้ว */}
       {!isLoading &&
-        <div className='max-w-3xl mx-auto my-2'>
+
+<div className='max-w-3xl mx-auto my-2 bg-rose-100'>
 
           {/* ----- HEADER ------ */}
 
-          <div><p className="text-3xl font-bold text-blue-600 text-center m-4">
+          <p className="text-3xl font-bold text-blue-600 text-center m-4">
             Add Employees
-          </p></div>
+          </p>
 
           {/* ------- INPUT && BTN ------ */}
 
           <div className="flex flex-col w-full lg:flex-row">
 
             <div className="grid flex-grow place-items-center">
-              <label className="input input-bordered flex items-center w-full">Name :
-                <input name='addname' type='text' value={todoText} onChange={todoTextChange} className="grow ml-2"></input></label>
+              <label className="input input-bordered flex items-center w-10/12">Name :
+                <input name='addname' type='text' value={todoText} onChange={todoTextChange} className=""></input></label>
             </div>
 
-            <div className="grid flex m-4">
+            <div className="grid flex m-4 justify-items-center">
               <button className="btn btn-success" onClick={async () => {
                 await addTodo(todoText)
               }}>Add</button>
