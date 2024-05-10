@@ -57,7 +57,7 @@
 
 //       setIsLoading(true)
 //       await fetchTodo()
-//       console.log(bodyData)
+//       // console.log(bodyData)
 //     } catch (error) {
 //       console.log('error', error)
 //     }
@@ -76,64 +76,94 @@
 
 //   return (
 //     <>
+
 //       {/* set แสดง Loading */}
-//       {isLoading && <div>Loading...</div>}
+//       {isLoading && <div className='flex items-center fixed inset-0 justify-center'><span className="loading loading-spinner loading-lg"></span>Loading...</div>}
 //       {/* set ไม่แสดง Loading เมื่อเรียกข้อมูลมาแล้ว */}
 //       {!isLoading &&
-//         <div className='container mx-auto px-20'>
 
-//           <div><p className="text-3xl font-bold text-blue-600 text-center m-4">
+//         <div className='max-w-3xl mx-auto my-2 bg-rose-100'>
+
+//           {/* ----- HEADER ------ */}
+
+//           <p className="text-3xl font-bold text-blue-600 text-center m-4">
 //             Add Employees
-//           </p></div>
+//           </p>
 
-//           <div>
+//           {/* ------- INPUT && BTN ------ */}
 
 //           <div className="flex flex-col w-full lg:flex-row">
 
-//           <div className="grid flex-grow place-items-center">
-//                 <label className="input input-bordered flex items-center gap-2 w-full">Name
-//                   <input name='addname' type='text' value={todoText} onChange={todoTextChange} className="grow" placeholder="...."></input></label>
-//               </div>
+//             <div className="grid flex-grow place-items-center">
 
-//               <div className="grid flex-grow place-items-center m-4">
+//               <label className="input input-bordered flex items-center w-10/12">Name :
+
+//                 <input name='addname' type='text' value={todoText} onChange={todoTextChange}></input>
+
+//               </label>
+
+//             </div>
+
+//             <div className="grid flex m-4 justify-items-center">
+
 //               <button className="btn btn-success" onClick={async () => {
 //                 await addTodo(todoText)
 //               }}>Add</button>
+
 //             </div>
 
 //           </div>
 
-//           {
-//             // map ข้อมูล ของ todos มาแสดง
-//             todos.map((todo, index) => (
-//               <div key={index}>
-//                 {i++}. {" "}
-//                 {/* {todo.id}  */}
-//                 {todo.name}
+//           {/* --------- TABLE DATA -------- */}
 
-//                 <img src={todo.avatar} alt="avatar" className='w-24 h-24'></img>
+//           <div className='max-w-xl mx-auto my-2'>
 
-//                 {/* ---- btn EDIT ---- */}
-//                 {/* สร้าง Link ให้ btn เพื่อไปหน้า edit พร้อมกับส่ง id ของ todo ไป */}
-//                 {/* **ท่า ` ` ใช้ $ เพื่อต่อ string กับ js** */}
-//                 <Link to={`/edit/${todo.id}`} >
-//                   <button>Edit</button>
-//                 </Link>
+//             {
+//               // map ข้อมูล ของ todos มาแสดง
+//               todos.map((todo, index) => (
+//                 <div id='1' key={index} className="">
 
-//                 {/* ---- btn DELETE ---- */}
-//                 <button
-//                   onClick={async () => {
-//                     await deleteTodo(todo.id)
-//                   }}
-//                 >Delete</button>
+//                   <div className='grid grid-cols-1 md:grid-cols-2'>
+//                     <div className='grid justify-items-center md:justify-items-start text-xl'>
 
-//               </div>
+//                       {i++}. {" "}
 
-//             ))
-//           }
+//                       {todo.name}
 
-//         </div>
+//                       <img src={todo.avatar} alt="avatar" className='w-24 m-2'></img>
+//                     </div>
 
+//                     {/* ---- btn EDIT ---- */}
+//                     {/* สร้าง Link ให้ btn เพื่อไปหน้า edit พร้อมกับส่ง id ของ todo ไป */}
+//                     {/* **ท่า ` ` ใช้ $ เพื่อต่อ string กับ js** */}
+
+//                     <div className='grid justify-items-center md:justify-items-end'>
+
+//                       <button><Link to={`/edit/${todo.id}`} >
+//                         <img src="https://www.freeiconspng.com/thumbs/edit-icon-png/edit-new-icon-22.png" className='w-8' />
+//                       </Link></button>
+
+//                       {/* ---- btn DELETE ---- */}
+//                       <button
+//                         onClick={async () => {
+//                           await deleteTodo(todo.id)
+//                         }} >
+
+//                         <img src="https://cdn.iconscout.com/icon/free/png-256/free-delete-736-470378.png" className='w-8' />
+
+//                       </button>
+
+//                     </div>
+
+//                   </div>
+
+//                   <div className="divider divider-accent"></div>
+
+//                 </div>
+
+//               ))
+//             }
+//           </div >
 //         </div >
 //       }
 //     </>
@@ -149,6 +179,8 @@ import axios from 'axios'
 
 import { Link } from 'react-router-dom'
 
+import AddName from './components/AddName'
+
 // เก็บ URL_Base เป็น const
 const BASE_URL = 'https://6630e534c92f351c03db7ae3.mockapi.io'
 
@@ -157,8 +189,6 @@ function App() {
   const [todos, setTodos] = useState([])
 
   let i = 1
-
-  let todoText
 
   // สร้าง const สำหรับ Loading เอาไว้เรียกใช้
   const [isLoading, setIsLoading] = useState(true)
@@ -193,41 +223,21 @@ function App() {
     }
   }
 
-  async function addTodo(todoText) {
-    const bodyData = {
-      name: todoText
-    }
-    try {
-      await axios.post(`${BASE_URL}/todos/`, bodyData)
-
-      setIsLoading(true)
-      await fetchTodo()
-      console.log(bodyData)
-    } catch (error) {
-      console.log('error', error)
-    }
-  }
-
   // useEffect func fetchTodo() แค่ครั้งเดียวโดยใส่ ,[] ต่อท้าย
   useEffect(() => {
     fetchTodo()
   }, [])
 
-  function todoTextChange(event) {
-    // setTodo และรับ params ชื่อ previousState เพื่อเช็คว่า ก่อนหน้านี้มีค่าเป็นอะไร
-    todoText = event.target.value
-  }
-
 
   return (
     <>
-    
+
       {/* set แสดง Loading */}
       {isLoading && <div className='flex items-center fixed inset-0 justify-center'><span className="loading loading-spinner loading-lg"></span>Loading...</div>}
       {/* set ไม่แสดง Loading เมื่อเรียกข้อมูลมาแล้ว */}
       {!isLoading &&
 
-<div className='max-w-3xl mx-auto my-2 bg-rose-100'>
+        <div className='max-w-3xl mx-auto my-2 bg-rose-100'>
 
           {/* ----- HEADER ------ */}
 
@@ -237,20 +247,7 @@ function App() {
 
           {/* ------- INPUT && BTN ------ */}
 
-          <div className="flex flex-col w-full lg:flex-row">
-
-            <div className="grid flex-grow place-items-center">
-              <label className="input input-bordered flex items-center w-10/12">Name :
-                <input name='addname' type='text' value={todoText} onChange={todoTextChange} className=""></input></label>
-            </div>
-
-            <div className="grid flex m-4 justify-items-center">
-              <button className="btn btn-success" onClick={async () => {
-                await addTodo(todoText)
-              }}>Add</button>
-            </div>
-
-          </div>
+          <AddName />
 
           {/* --------- TABLE DATA -------- */}
 
@@ -263,8 +260,9 @@ function App() {
 
                   <div className='grid grid-cols-1 md:grid-cols-2'>
                     <div className='grid justify-items-center md:justify-items-start text-xl'>
+
                       {i++}. {" "}
-                      {/* {todo.id}  */}
+
                       {todo.name}
 
                       <img src={todo.avatar} alt="avatar" className='w-24 m-2'></img>
@@ -275,6 +273,7 @@ function App() {
                     {/* **ท่า ` ` ใช้ $ เพื่อต่อ string กับ js** */}
 
                     <div className='grid justify-items-center md:justify-items-end'>
+
                       <button><Link to={`/edit/${todo.id}`} >
                         <img src="https://www.freeiconspng.com/thumbs/edit-icon-png/edit-new-icon-22.png" className='w-8' />
                       </Link></button>
@@ -283,8 +282,12 @@ function App() {
                       <button
                         onClick={async () => {
                           await deleteTodo(todo.id)
-                        }}
-                      ><img src="https://cdn.iconscout.com/icon/free/png-256/free-delete-736-470378.png" className='w-8' /></button>
+                        }} >
+
+                        <img src="https://cdn.iconscout.com/icon/free/png-256/free-delete-736-470378.png" className='w-8' />
+
+                      </button>
+
                     </div>
 
                   </div>
